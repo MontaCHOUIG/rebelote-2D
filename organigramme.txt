@@ -1,0 +1,147 @@
+                             +----------------------+
+                             | Début de la boucle   |
+                             +----------------------+
+                                        |
+                                        v
+          +---------------------------+---------------------------+
+          |                          Tant que game_over est faux (0)               |
+          +---------------------------------------------------------------+
+                                        |
+        +-------------------------------+--------------------------+
+        |                 Tant qu'il y a des événements                 |
+        +---------------------------------------------------------------+
+                                        |
+        +-----------------------------------------------------------+
+        |                          Traiter l'événement                             |
+        +-----------------------------------------------------------+
+             |                                 |
+             v                                 v
+     +-------------------+             +-------------------+
+     | Si l'événement   |             | Si l'événement   |
+     | est SDL_QUIT,    |             | est SDL_MOUSEMOTION |
+     | Mettre game_over |             | Vérifier les      |
+     | à 1              |             | positions des     |
+     |                   |             | boutons           |
+     +-------------------+             +-------------------+
+             |                                 |
+             v                                 v
+ +------------------------+          +-----------------------+
+ | Si l'événement         |          | Si l'événement       |
+ | est SDL_KEYDOWN,       |          | est SDL_KEYDOWN      |
+ | Si touche ESCAPE,      |          |                      |
+ | Mettre game_over à 1   |          | Si touche Q,         |
+ | Sinon, ne rien faire   |          | Mettre settings_loop |
+ |                        |          | à 0                 |
+ +------------------------+          +-----------------------+
+             |                                 |
+             v                                 v
+ +-----------------------+            +---------------------+
+ | Si l'événement        |            | Si l'événement      |
+ | est SDL_MOUSEBUTTONDOWN|            | est SDL_MOUSEMOTION |
+ | Gérer les actions en  |            |                     |
+ | fonction des boutons  |            | Vérifier les       |
+ +-----------------------+            | positions des      |
+             |                         | boutons             |
+             v                         +---------------------+
+ +------------------------+                      |
+ | Mettre à jour          |                      |
+ | l'affichage            |                      |
+ +------------------------+                      |
+             |                                   |
+             v                                   |
+ +------------------------+                      |
+ | Mettre à jour          |                      |
+ | l'écran                |                      |
+ +------------------------+                      |
+             |                                   |
+             v                                   |
+ +------------------------+                      |
+ | Attendre un court      |                      |
+ | délai                  |                      |
+ +------------------------+                      |
+             |                                   |
+             +-----------------------------------+
+                        |
+                        v
+             +----------------------+
+             | Fin de la boucle     |
+             +----------------------+
+                        |
+                        v
+             +----------------------+
+             | Fin du programme     |
+             +----------------------+
+
+
+
+Démarrer
+-> Initialiser SDL et charger les ressources
+-> Boucle principale :
+    -> Gérer les événements :
+        -> Mouvement de la souris :
+            -> Mettre à jour les états de survol des boutons
+        -> Clic de souris :
+            -> Lire un son de clic
+            -> Gérer les clics sur les boutons :
+                -> Bouton Quitter :
+                    -> Définir game_over à vrai
+                -> Bouton Jouer :
+                    -> Afficher l'écran "Bientôt disponible"
+                        -> Gérer le bouton Retour
+                -> Bouton Paramètres :
+                    -> Afficher le menu des paramètres
+                        -> Gérer les boutons de volume (haut, bas, muet, non muet)
+                        -> Gérer le bouton plein écran
+                        -> Gérer le bouton fenêtré
+                        -> Gérer le bouton Retour
+                -> Bouton Crédits :
+                    -> Afficher l'écran des crédits
+                        -> Gérer le bouton Retour
+    -> Mettre à jour et afficher les graphiques
+-> Nettoyer les ressources et quitter SDL
+Terminer
+
+
+Description des boutons:
+
+    Bouton Quitter:
+        Passer la souris sur le bouton change son apparence pour indiquer qu'il est cliquable.
+        Cliquer sur le bouton joue un son, définit l'indicateur game_over à vrai et quitte la boucle.
+
+    Bouton Jouer:
+        Passer la souris sur le bouton change son apparence pour indiquer qu'il est cliquable.
+        Cliquer sur le bouton joue un son, affiche l'écran "Bientôt disponible" et entre dans une nouvelle boucle pour gérer les clics sur le bouton Retour.
+
+    Bouton Paramètres:
+        Passer la souris sur le bouton change son apparence pour indiquer qu'il est cliquable.
+        Cliquer sur le bouton joue un son, affiche le menu des paramètres et entre dans une nouvelle boucle pour gérer les différents boutons de paramètres et le bouton Retour.
+
+    Bouton Crédits:
+        Passer la souris sur le bouton change son apparence pour indiquer qu'il est cliquable.
+        Cliquer sur le bouton joue un son, affiche l'écran des crédits et entre dans une nouvelle boucle pour gérer le clic sur le bouton Retour.
+
+Boutons du menu settings:
+
+    Boutons de volume Haut/Bas:
+        Passer la souris sur un bouton change son apparence pour indiquer qu'il est cliquable.
+        Cliquer sur un bouton joue un son, ajuste le volume de la musique et met à jour l'affichage du volume.
+
+    Bouton Muet/Non muet:
+        Passer la souris sur un bouton change son apparence pour indiquer qu'il est cliquable.
+        Cliquer sur le bouton muet met la musique en pause et change son apparence.
+        Cliquer sur le bouton non muet reprend la musique et change son apparence.
+
+    Bouton Plein écran/Fenêtré:
+        Passer la souris sur un bouton change son apparence pour indiquer qu'il est cliquable.
+        Cliquer sur le bouton plein écran passe en mode plein écran et change son apparence.
+        Cliquer sur le bouton fenêtré passe en mode fenêtré et change son apparence.
+
+    Bouton Retour (dans les écrans Paramètres et Crédits):
+        Passer la souris sur le bouton change son apparence pour indiquer qu'il est cliquable.
+        Cliquer sur le bouton joue un son, masque l'écran actuel et retourne au menu principal.
+
+
+
+
+
+
