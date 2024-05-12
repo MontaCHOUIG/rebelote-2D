@@ -19,7 +19,7 @@ typedef struct {
 	int up;
 	double vitesse_x;
 	double vitesse_y;
-	//health healthperso;
+	int ID ;
 
 
 }personne;
@@ -27,20 +27,16 @@ typedef struct {
 
 
 
- /*typedef struct {
-	SDL_Surface * healthbar;
-	SDL_Surface * cadrehealthbar;
-	SDL_Rect posbar;
-	SDL_Rect poscadre;
-	texte health;
-	}health;*/
 
 
 
-	void init(bouton  *a , bouton *  b );
+
+ 	void init(bouton  *a , bouton  * b , image * c , image * d );
+
 	void initperso(personne * p1 , personne * p2 );
 	void afficherperso(personne * p , SDL_Surface *screen);
-	void movePerso(personne *p,Uint32 dt);
+	void movePerso(personne *p, Uint32 dt);
+
     void animerPerso(personne *p);
  	void saut(personne *p, Uint32 dt, int * posinit);
     void freeperso(personne  p , personne  p1 , bouton a , bouton b );

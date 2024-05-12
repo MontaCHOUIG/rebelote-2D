@@ -4,9 +4,8 @@
 #include <math.h>
 #include "image.h"
 #include "perso.h"
-#define MAX_HORIZONTAL_JUMP_DISTANCE 200 // Adjust this value as needed
 
-void init(bouton  *a , bouton  * b )
+void init(bouton  *a , bouton  * b , image * c , image * d )
 {
     a->boutonnonpressed = IMG_Load("boutonperso1.jpg");
     a->boutonpressed = IMG_Load("boutonperso1.jpg");
@@ -16,7 +15,7 @@ void init(bouton  *a , bouton  * b )
     }
 
     a->posbouton.x = 100;
-    a->posbouton.y = 400;
+    a->posbouton.y = 500;
 
     b->boutonnonpressed = IMG_Load("boutonperso2.jpg");
     b->boutonpressed = IMG_Load("boutonperso2.jpg");
@@ -25,10 +24,21 @@ void init(bouton  *a , bouton  * b )
         return;
     }
 
-    b->posbouton.x = 800;
-    b->posbouton.y = 400;
+    b->posbouton.x = 1200;
+    b->posbouton.y = 500;
 
+    c->img = IMG_Load("spritepersoNORMALMENU.png");
+    d->img = IMG_Load("spritepersoTOUNSIMENU.png");
+    if (c->img == NULL || d->img == NULL) {
+        printf("Erreur image MENU game : %s\n", SDL_GetError());
+        return;
+    }
 
+    c->pos1.x = 200;
+    c->pos1.y = 300;
+
+    d->pos1.x = 1300;
+    d->pos1.y = 300;
 
 
 }
@@ -44,56 +54,54 @@ void initperso(personne * p1 , personne * p2 )
     }
 
     p1->pos1.x = 0;
-    p1->pos1.y = 500;
+    p1->pos1.y = 700;
     p1->pos2.x = 0;
     p1->pos2.y = 200;
     p1->pos2.w = 150;
-    p1->pos2.h = 190; 
+    p1->pos2.h = 195; 
 
-    p1->acceleration = 0;
+    p1->acceleration = 0.001;
     p1->vitesse = 0;
     p1->vitesse_saut = 0.1;
 
     p1->up = 0;
     p2->up = 0;
 
-	p2->spritesheet = IMG_Load("spritetest.jpg");
+	p2->spritesheet = IMG_Load("spritepersoTOUNSI.png");
     if (p2->spritesheet == NULL) {
         printf("Erreur : %s\n", SDL_GetError());
         return;
     }
 
-    p2->pos1.x = 0;
-    p2->pos1.y = 500;
+   p2->pos1.x = 0;
+    p2->pos1.y = 600;
     p2->pos2.x = 0;
-    p2->pos2.y = 0;
-    p2->pos2.w = 112.5;
-    p2->pos2.h = 200; 
+    p2->pos2.y = 200;
+    p2->pos2.w = 150;
+    p2->pos2.h = 195;
     
-   // p->health = 100 ;  //
-    //p->score = 0;  // A developper
+   
     p2->acceleration = 0;
     p2->vitesse = 0;
 
     p1->vitesse_x = 0;
     p1->vitesse_y = 0;
 
+    p1->ID = 1 ;
+    p2->ID = 2;
 
 }
 
 void afficherperso(personne * p , SDL_Surface *screen)
 {
 	SDL_BlitSurface(p->spritesheet,&(p->pos2),screen,&(p->pos1)); // pos2 IDLE 
-	//SDL_BlitSurface(p->healthbar,&(p->pos2),screen,&(p->pos1)); // pos2 IDLE 	
-	//SDL_BlitSurface(p->cadrehealthbar,&(p->pos2),screen,&(p->pos1)); // pos2 IDLE 
-
+	
 	
 
 }
-
 void movePerso(personne *p, Uint32 dt) {
     
-    double maxAcceleration = 0.05; 
+    double maxAcceleration = 1; 
     if (p->acceleration > maxAcceleration) {
         p->acceleration = maxAcceleration;
     } else if (p->acceleration < -maxAcceleration) {
@@ -102,29 +110,32 @@ void movePerso(personne *p, Uint32 dt) {
 
     p->vitesse += p->acceleration * dt;
 
-    double maxVelocity = 0.5;
-    if (p->vitesse > maxVelocity) {
-        p->vitesse = maxVelocity;
-    } else if (p->vitesse < -maxVelocity) {
-        p->vitesse = -maxVelocity;
+    double VitesseMax = 0.5;
+    if (p->vitesse > VitesseMax) {
+        p->vitesse = VitesseMax;
+    } else if (p->vitesse < -VitesseMax) {
+        p->vitesse = -VitesseMax;
     }
-
+    
     p->pos1.x += p->vitesse * dt + 0.5 * p->acceleration * dt * dt;
 
-    double friction = 0.001; 
+    double frott = 0.001; 
     if (p->direction == 0) {
         if (p->vitesse > 0) {
-            p->vitesse -= friction * dt;
+            p->vitesse -= frott * dt;
             if (p->vitesse < 0) p->vitesse = 0; 
         } else if (p->vitesse < 0) {
-            p->vitesse += friction * dt;
+            p->vitesse += frott * dt;
             if (p->vitesse > 0) p->vitesse = 0; 
         }
     }
+
+
 }
 
 void animerPerso(personne *p)
 {
+   
 
     if (p->direction == 0)
     {
@@ -139,12 +150,15 @@ void animerPerso(personne *p)
     } else {
         p->pos2.x += p->pos2.w;
     }
+    }
+
+
     
-}
+
 
 void saut(personne *p, Uint32 dt, int *posinit) {
-    static double jumpHeight = 2.0; // Adjust jump height as needed
-    static double gravity = 0.01;   // Adjust gravity for desired jump behavior
+     double jumpHeight = 2.0; 
+     double gravity = 0.01;   
 
     if (*posinit == 1 && p->up == 1) {
         p->vitesse_y = jumpHeight;
@@ -153,15 +167,15 @@ void saut(personne *p, Uint32 dt, int *posinit) {
     }
 
     if (p->up == 1) {
-        p->pos1.y -= p->vitesse_y * dt; // Move character up
-        p->vitesse_y -= gravity * dt;    // Apply gravity
+        p->pos1.y -= p->vitesse_y * dt; 
+        p->vitesse_y -= gravity * dt;    
     }
 
-    if (p->pos1.y >= 500) { // Reached ground level
+    if (p->pos1.y >= 500) { 
         p->pos1.y = 500;
         p->vitesse_y = 0;
-        p->up = 0; // Reset jump flag
-        *posinit = 1; // Update posinit to indicate character landed on the ground
+        p->up = 0; 
+        *posinit = 1; 
     }
 }
 

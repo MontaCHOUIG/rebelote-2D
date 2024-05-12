@@ -44,7 +44,7 @@ void initsettings(bouton * a) {
         return;
     }
 
-    a->posbouton.x = (SCREEN_W - a->boutonnonpressed->w) / 2 - 200;
+    a->posbouton.x = (SCREEN_W - a->boutonnonpressed->w) / 2 ;
     a->posbouton.y = (SCREEN_H - a->boutonnonpressed->h) / 2 + 130;
 }
 
@@ -56,7 +56,7 @@ void initplay(bouton * a) {
         return;
     }
 
-    a->posbouton.x = (SCREEN_W - a->boutonnonpressed->w) / 2 - 200;
+    a->posbouton.x = (SCREEN_W - a->boutonnonpressed->w) / 2 ;
     a->posbouton.y = (SCREEN_H - a->boutonnonpressed->h) / 2 - 100;
 }
 
@@ -68,7 +68,7 @@ void initcredits(bouton * a) {
         return;
     }
 
-    a->posbouton.x = (SCREEN_W - a->boutonnonpressed->w) / 2 - 200;
+    a->posbouton.x = (SCREEN_W - a->boutonnonpressed->w) / 2 ;
     a->posbouton.y = (SCREEN_H - a->boutonnonpressed->h) / 2 + 15;
 }
 
@@ -82,7 +82,7 @@ void initquit(bouton * a) {
         return;
     }
 
-    a->posbouton.x = (SCREEN_W - a->boutonnonpressed->w) / 2 - 200;
+    a->posbouton.x = (SCREEN_W - a->boutonnonpressed->w) / 2 ;
     a->posbouton.y = (SCREEN_H - a->boutonnonpressed->h) / 2 + 245;
 }
 
@@ -113,21 +113,7 @@ void afficherboutonpressed(bouton * a , SDL_Surface * screen) {
     SDL_BlitSurface(a->boutonpressed , NULL , screen , &(a->posbouton));
 
 }
-void initcomingsoon(image* a){
-	 a->img = IMG_Load("backplay.jpg");
-    if (a->img == NULL) {
-        printf("Erreur : %s\n", SDL_GetError());
-        return;
-    }
 
-    a->pos1.x = 0;
-    a->pos1.y = 0;
-    a->pos2.x = 0;
-    a->pos2.y = 0;
-    a->pos2.w = SCREEN_W;
-    a->pos2.h = SCREEN_H;
-	
-}
 void initring(image * a1 , image * a2 , image * a3)
 {
 	 a1->img = IMG_Load("pos1.png");
@@ -136,7 +122,7 @@ void initring(image * a1 , image * a2 , image * a3)
         return;
     }
 
-    a1->pos1.x = 850;
+    a1->pos1.x = 1200;
     a1->pos1.y = 60;
     a1->pos2.x = 0;
     a1->pos2.y = 0;
@@ -150,7 +136,7 @@ void initring(image * a1 , image * a2 , image * a3)
         return;
     }
 
-    a2->pos1.x = 850;
+    a2->pos1.x = 1200;
     a2->pos1.y = 60;
     a2->pos2.x = 0;
     a2->pos2.y = 0;
@@ -164,7 +150,7 @@ void initring(image * a1 , image * a2 , image * a3)
         return;
     }
 
-    a3->pos1.x = 850;
+    a3->pos1.x = 1200;
     a3->pos1.y = 60;
     a3->pos2.x = 0;
     a3->pos2.y = 0;

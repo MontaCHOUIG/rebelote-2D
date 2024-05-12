@@ -13,12 +13,7 @@ typedef struct {
     SDL_Surface* img;
 }image;
 
-typedef struct {
 
-	SDL_Surface * text ;
-	SDL_Rect postext;
-
-}texte;
 
 typedef struct {
 
@@ -41,7 +36,6 @@ void initcomingsoon(image* a);
 void liberermenu(image a , bouton b , bouton c , bouton d , bouton e );
 void afficherbouton(bouton * a , SDL_Surface *screen);
 void afficherboutonpressed(bouton * a , SDL_Surface * screen);
-void inittext(texte t[]);
 void initboutonssettings(bouton* a , bouton *b , bouton *c , bouton *d , bouton *e , bouton * f, bouton * g);
 void initcreditsbackground(image * a , SDL_Surface * screen);
 void libererimage(image a );
